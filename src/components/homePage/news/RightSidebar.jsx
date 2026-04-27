@@ -6,12 +6,14 @@ const RightSidebar = () => {
   const handelGoogleSignin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
+      callbackURL: "/",
     });
    
   };
    const handelGithubSignin = async () => {
     const data = await authClient.signIn.social({
       provider: "github",
+      callbackURL: "/",
     });
    
   };
