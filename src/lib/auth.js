@@ -5,9 +5,7 @@ const client = new MongoClient(process.env.AUTH_CONNECT_URI);
 const db = client.db("dragon-db");
 
 export const auth = betterAuth({
-  account: {
-		skipStateCookieCheck: true,
-	},
+ 
   emailAndPassword: {
     enabled: true,
   },
