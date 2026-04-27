@@ -11,37 +11,43 @@ export const metadata = {
 
 const NewsByCategory = async ({ params }) => {
   const { id } = await params;
-
   const news = await getNewsByCategoryId(id);
-
   const categories = await getCategories();
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        {/* Left Sidebar: Categories */}
-        <LeftSidebar categories={categories} activeId={id}></LeftSidebar>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+      {/* 1 column on mobile, 12 columns on desktop */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        
+        {/* 1. LEFT SIDEBAR: First on mobile, First on desktop */}
+        <aside className="md:col-span-3 order-1">
+          <LeftSidebar categories={categories} activeId={id} />
+        </aside>
 
-        {/* Middle Content: News Summary */}
-        <main className="col-span-1 md:col-span-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-5">
+        {/* 2. RIGHT SIDEBAR: Second on mobile, Third on desktop */}
+        <aside className="md:col-span-3 order-2 md:order-3">
+          <RightSidebar />
+        </aside>
+
+        {/* 3. MAIN NEWS: Third on mobile, Second on desktop */}
+        <main className="md:col-span-6 order-3 md:order-2">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-6 border-b pb-2">
             Dragon News Home
           </h2>
-          <div className="bg-white flex flex-col gap-6">
-            {/* News cards will go here */}
-
+          
+          <div className="flex flex-col gap-8">
             {news && news.length > 0 ? (
               news.map((newsItem) => (
-                <NewsCard key={newsItem._id} newsItem={newsItem}></NewsCard>
+                <NewsCard key={newsItem._id} newsItem={newsItem} />
               ))
             ) : (
-              <p className="text-gray-400 italic">News summaries loading...</p>
+              <div className="text-center py-10 bg-gray-50 rounded-xl">
+                <p className="text-gray-500 font-medium italic">No news found in this category.</p>
+              </div>
             )}
           </div>
         </main>
 
-        {/* Right Sidebar: Social Media */}
-        <RightSidebar></RightSidebar>
       </div>
     </div>
   );
